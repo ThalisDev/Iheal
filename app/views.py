@@ -3,9 +3,11 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from htmlmin.decorators import minified_response
 
 # Create your views here.
 # login de usuario
+@minified_response
 def login_user(request):
     return render(request, 'login.html',
         {
@@ -13,11 +15,13 @@ def login_user(request):
         }                          
     )
     
+@minified_response
 def logout_user(request):
     logout(request)
     return redirect ('/')
     
 # processamento do login de usuario
+@minified_response
 def submit_login(request):
     
     if request.POST:
@@ -33,6 +37,7 @@ def submit_login(request):
         return redirect('/')
 
 # login obrigado
+@minified_response
 @login_required(login_url='/login/')
 def home(request):
     return render(request, 'home.html',
